@@ -1,0 +1,24 @@
+$def with (data)
+<table class="ui table">
+	<tr>
+		<td>日期</td>
+		<td>缩略图</td>
+		<td>源文件大小</td>
+		<td>IP</td>
+		<td>装载</td>
+	</tr>
+	$for row in data:
+		<tr>
+			<td>$(datetime.datetime.fromtimestamp(row[0]*0.001).strftime('%Y-%m-%d %H:%M:%S'))</td>
+			<td><img src="$row[3]" style="max-width: 64px; max-height: 64px"></td>
+			<td>$("%.3f K" % (row[2] / 1024.))</td>
+			<td>$row[1]</td>
+			<td>
+				<a class="ui orange button" href="/reuse?filename=$(row[0]).jpg">
+					<i class="recycle icon"></i>
+					Reuse This
+				</a>
+			</td>
+		</tr>
+
+</table>

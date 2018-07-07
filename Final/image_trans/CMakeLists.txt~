@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(image_trans)
+
+find_package(catkin REQUIRED COMPONENTS
+  cv_bridge
+  image_transport
+  roscpp
+  sensor_msgs
+  std_msgs
+)
+
+catkin_package(
+)
+
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
+
+
+
+add_executable(getImage src/getImage.cpp)
+add_dependencies(getImage ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(getImage ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(imageServer src/imageServer.cpp)
+add_dependencies(imageServer ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(imageServer ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

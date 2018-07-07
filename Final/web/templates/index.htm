@@ -1,0 +1,62 @@
+$def with (data)
+<h2>ROServ Python Uploader</h2>
+
+<h3>上传图片</h3>
+
+<form method="POST" enctype="multipart/form-data" action="/" class="ui form">
+	<input type="file" name="myfile" />
+	<br/>
+	<input type="submit" class="ui button"/>
+</form>
+
+<hr />
+
+<h3>已上传的图片</h3>
+
+<div class="ui six columns doubling grid">
+	<div class="column" style="padding: 10px;">
+	<div class="ui fluid card">
+		<div class="image" style="max-width: 256px;">
+			<img src="static/current.jpg?ts=$(time.time())">
+		</div>
+		<div class="content">
+			<a class="header">Current Image</a>
+			<div class="meta">
+				<span class="date">-</span>
+			</div>
+			<div class="description">
+				Image Currently Loaded
+			</div>
+		</div>
+		<div class="extra content">
+			<a class="ui green button">
+				<i class="play icon"></i>
+				In use
+			</a>
+		</div>
+	</div>
+	</div>
+	$for row in data:
+		<div class="column" style="padding: 10px;">
+		<div class="ui fluid card">
+			<div class="image" style="max-width: 256px;">
+				<img src="$row[3]">
+			</div>
+			<div class="content">
+				<a class="header">$(datetime.datetime.fromtimestamp(row[0]*0.001).strftime('%m-%d %H:%M:%S'))</a>
+				<div class="meta">
+					<span class="date">$("%.3f K" % (row[2] / 1024.))</span>
+				</div>
+				<div class="description">
+					from $row[1]
+				</div>
+			</div>
+			<div class="extra content">
+				<a class="ui orange button" href="/reuse?filename=$(row[0]).jpg">
+					<i class="recycle icon"></i>
+					Reuse This
+				</a>
+			</div>
+		</div>
+		</div>
+</div>
